@@ -56,6 +56,12 @@ namespace NoLockScreenHelper2
                 key.DeleteValue(ApplicationName, false);
         }
 
+        public static bool GetLaunchApplicationAtStartupUserScope(string ApplicationName)
+        {
+            RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+            return key.GetValueNames().Contains(ApplicationName);
+        }
+
         public static IPAddress GetDefaultGateway()
         {
             return NetworkInterface
