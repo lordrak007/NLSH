@@ -21,7 +21,18 @@ namespace NoLockScreenHelper2
                 buttonPortableMaker.Text = "Zrušit přenositelnost";
             else
                 buttonPortableMaker.Text = "Udělat přenositelné";
+
             checkBoxEnableNotificationBubbles.Checked = MainForm.Config.EnableNotificationBubbles;
+            checkBoxActivateOnStartup.Checked = MainForm.Config.ActivateOnStartup;
+            checkBoxStartMinimized.Checked = MainForm.Config.StartMinimalized;
+            checkBoxHideIfMinimalized.Checked = MainForm.Config.HideToTrayIfMinimized;
+            checkBoxRunOnLogOn.Checked = Tools.GetLaunchApplicationAtStartupUserScope("NLSH");
+
+            this.checkBoxRunOnLogOn.CheckedChanged += new System.EventHandler(this.checkBoxRunOnLogOn_CheckedChanged);
+            this.checkBoxEnableNotificationBubbles.CheckedChanged += new System.EventHandler(this.checkBoxEnableNotificationBubbles_CheckedChanged);
+            this.checkBoxStartMinimized.CheckedChanged += new System.EventHandler(this.checkBoxStartMinimized_CheckedChanged);
+            this.checkBoxHideIfMinimalized.CheckedChanged += new System.EventHandler(this.checkBoxHideIfMinimalized_CheckedChanged);
+            this.checkBoxActivateOnStartup.CheckedChanged += new System.EventHandler(this.checkBoxActivateOnStartup_CheckedChanged);
 
             initOLV();
         }
@@ -43,6 +54,18 @@ namespace NoLockScreenHelper2
         private void checkBoxEnableNotificationBubbles_CheckedChanged(object sender, EventArgs e)
         {
             MainForm.Config.EnableNotificationBubbles = checkBoxEnableNotificationBubbles.Checked;
+            MainForm.Config.Save();
+        }
+
+        private void checkBoxStartMinimized_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.Config.StartMinimalized = checkBoxStartMinimized.Checked;
+            MainForm.Config.Save();
+        }
+
+        private void checkBoxHideIfMinimalized_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.Config.HideToTrayIfMinimized = checkBoxHideIfMinimalized.Checked;
             MainForm.Config.Save();
         }
 

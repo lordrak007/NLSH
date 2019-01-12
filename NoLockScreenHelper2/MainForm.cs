@@ -23,12 +23,18 @@ namespace NoLockScreenHelper2
         Stopwatch stopky = new Stopwatch();
         Timer casovatSopek = new Timer();
         Task kontrolor;
+        MenuItem menuItemShow = new MenuItem("Zobrazit");
+        MenuItem menuItemStop = new MenuItem("Stop");
+        MenuItem menuItemStart = new MenuItem("Start");
+        MenuItem menuItemAuto = new MenuItem("Auto");
 
         public MainForm()
         {
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.FormClosing += MainForm_FormClosing;
+            this.Resize += MainForm_Resize;
+            this.Load += MainForm_Load;
 
             // vymazani casovace na formulari
             toolStripStatusLabelTimer.Text = "";
@@ -39,6 +45,16 @@ namespace NoLockScreenHelper2
 
             NI.Visible = true;
             NI.Icon = Properties.Resources.zamceno;
+            NI.MouseDoubleClick += NI_MouseDoubleClick;
+            NI.ContextMenu = new ContextMenu();
+            menuItemShow.Click += MenuItemShow_Click;
+            menuItemStart.Click += buttonStart_Click;
+            menuItemStop.Click += buttonStop_Click;
+            menuItemAuto.Click += buttonAuto_Click;
+            NI.ContextMenu.MenuItems.Add(menuItemShow);
+            NI.ContextMenu.MenuItems.Add(menuItemStart);
+            NI.ContextMenu.MenuItems.Add(menuItemStop);
+            NI.ContextMenu.MenuItems.Add(menuItemAuto);
 
             if (!Config.Automat && Config.ActivateOnStartup)
                 activate();
@@ -49,8 +65,12 @@ namespace NoLockScreenHelper2
             {
                 automat.Start();
                 buttonAuto.Enabled = false;
+                menuItemAuto.Enabled = false;
             }
 
+            if (Config.StartMinimalized)
+                this.WindowState = FormWindowState.Minimized;
+            
             
             kontrolor = Task.Factory.StartNew(() =>
             {
@@ -83,6 +103,33 @@ namespace NoLockScreenHelper2
 
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            if (Config.HideToTrayIfMinimized && WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+            }
+        }
+
+        private void MenuItemShow_Click(object sender, EventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void NI_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized && Config.HideToTrayIfMinimized)
+            {
+                Hide();
+            }
+        }
 
         private void CasovatSopek_Tick(object sender, EventArgs e)
         {
@@ -142,6 +189,8 @@ namespace NoLockScreenHelper2
                 //Tools.Activate();
                 buttonStart.Enabled = false;
                 buttonStop.Enabled = true;
+                menuItemStart.Enabled = false;
+                menuItemStop.Enabled = true;
                 Icon = NI.Icon = Properties.Resources.odemceno;
                 if (Config.Automat)
                 {
@@ -169,6 +218,8 @@ namespace NoLockScreenHelper2
                 //Tools.Deactivate();
                 buttonStart.Enabled = true;
                 buttonStop.Enabled = false;
+                menuItemStart.Enabled = true;
+                menuItemStop.Enabled = false;
                 Icon = NI.Icon = Properties.Resources.zamceno;
                 if (Config.Automat)
                 {
@@ -190,6 +241,7 @@ namespace NoLockScreenHelper2
         {
             activate();
             buttonAuto.Enabled = true;
+            menuItemAuto.Enabled = true;
             Config.Automat = false;
             automat.Stop();
             Config.Activated = true;
@@ -199,6 +251,7 @@ namespace NoLockScreenHelper2
         {
             deactivate();
             buttonAuto.Enabled = true;
+            menuItemAuto.Enabled = true;
             Config.Automat = false;
             automat.Stop();
             Config.Activated = false;
@@ -207,8 +260,11 @@ namespace NoLockScreenHelper2
         private void buttonAuto_Click(object sender, EventArgs e)
         {
             buttonStart.Enabled = true;
+            menuItemStart.Enabled = true;
             buttonStop.Enabled = true;
+            menuItemStop.Enabled = true;
             buttonAuto.Enabled = false;
+            menuItemAuto.Enabled = false;
             Config.Automat = true;
             automat.Start();
         }

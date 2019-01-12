@@ -18,9 +18,11 @@ namespace NoLockScreenHelper2
             Automat = false;
             Activated = false;
             EnableNotificationBubbles = true;
+            HideToTrayIfMinimized = false;
+            StartMinimalized = false;
         }
         static readonly string ConfigurationsPath = "Settings.xml";
-
+        [XmlAttribute]
         public bool Automat { get; set; }
 
         public event EventHandler ActivationChanged;
@@ -36,12 +38,16 @@ namespace NoLockScreenHelper2
                 RaiseActivationChanged();
             }
         }
-
+        [XmlAttribute]
         public bool ActivateOnStartup { get; set; }
-
+        [XmlIgnore]
         public bool RunOnLogOn { get; set; }
-
+        [XmlAttribute]
         public bool EnableNotificationBubbles { get; set; }
+        [XmlAttribute]
+        public bool HideToTrayIfMinimized { get; set; }
+        [XmlAttribute]
+        public bool StartMinimalized { get; set; }
 
         public Networks Networks {get;set;}
 
