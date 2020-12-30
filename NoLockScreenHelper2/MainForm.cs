@@ -21,7 +21,9 @@ namespace NoLockScreenHelper2
         private readonly Color WinGreen = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(255)))), ((int)(((byte)(134)))));
         private readonly Color WinRed = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(134)))), ((int)(((byte)(134)))));
         Stopwatch stopky = new Stopwatch();
-        Timer casovatSopek = new Timer();
+        Timer casovatStopek = new Timer();
+        Timer casovacVypnuti = new Timer();
+        DateTime _casovacVypnutiStart = new DateTime();
         Task kontrolor;
         MenuItem menuItemShow = new MenuItem("Zobrazit");
         MenuItem menuItemStop = new MenuItem("Stop");
@@ -38,9 +40,10 @@ namespace NoLockScreenHelper2
 
             // vymazani casovace na formulari
             toolStripStatusLabelTimer.Text = "";
-            casovatSopek.Tick += CasovatSopek_Tick;
+            casovatStopek.Tick += CasovatStopek_Tick;
 
             Config = Configuration.Load();
+
             Config.ActivationChanged += Config_ActivationChanged;
 
             NI.Visible = true;
@@ -70,8 +73,8 @@ namespace NoLockScreenHelper2
 
             if (Config.StartMinimalized)
                 this.WindowState = FormWindowState.Minimized;
-            
-            
+
+
             kontrolor = Task.Factory.StartNew(() =>
             {
                 bool prevState = false;
@@ -101,6 +104,64 @@ namespace NoLockScreenHelper2
                 }
             }, TaskCreationOptions.LongRunning);
 
+            splitButtonStart.Menu = new ContextMenuStrip();
+            _refreshStartButtonTimer();
+            casovacVypnuti.Tick += (s, e) => {
+
+                casovacVypnuti.Stop();
+                if (Config.TimerEndsActivity == TimerEndsActivity.Auto)
+                {
+                    splitButtonStart.Enabled = true;
+                    menuItemStart.Enabled = true;
+                    buttonStop.Enabled = true;
+                    menuItemStop.Enabled = true;
+                    buttonAuto.Enabled = false;
+                    menuItemAuto.Enabled = false;
+                    Config.Automat = true;
+                    automat.Start();
+                }
+                else
+                {
+                    deactivate();
+                    buttonAuto.Enabled = true;
+                    menuItemAuto.Enabled = true;
+                    Config.Automat = false;
+                    automat.Stop();
+                    Config.Activated = false;
+                }
+            };
+            
+
+
+
+
+        }
+
+        void _refreshStartButtonTimer()
+        {
+            splitButtonStart.Menu.Items.Clear();
+            foreach (var span in Config.TimeSpans)
+            {
+                splitButtonStart.Menu.Items.Add(new ToolStripMenuItem(span.TimeSpan.ToString(), null, splitButtonStartMenuItemClik_Click));
+            }
+
+        }
+
+        private void splitButtonStartMenuItemClik_Click(object sender, EventArgs e)
+        {
+
+            activate();
+            buttonAuto.Enabled = true;
+            menuItemAuto.Enabled = true;
+            Config.Automat = false;
+            automat.Stop();
+            Config.Activated = true;
+
+            TimeSpan ts = TimeSpan.Parse((sender as ToolStripMenuItem).Text);
+
+            casovacVypnuti.Interval = Convert.ToInt32(ts.TotalMilliseconds);
+            casovacVypnuti.Start();
+            _casovacVypnutiStart = DateTime.Now;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -131,7 +192,7 @@ namespace NoLockScreenHelper2
             }
         }
 
-        private void CasovatSopek_Tick(object sender, EventArgs e)
+        private void CasovatStopek_Tick(object sender, EventArgs e)
         {
             if (stopky.Elapsed.Hours > 0)
             {
@@ -141,6 +202,17 @@ namespace NoLockScreenHelper2
             {
                 toolStripStatusLabelTimer.Text = string.Format("{0:00}:{1:00}", stopky.Elapsed.Minutes, stopky.Elapsed.Seconds);
             }
+            if (casovacVypnuti.Enabled)
+            {
+                TimeSpan ubehnutyCas = DateTime.Now - _casovacVypnutiStart;
+                TimeSpan zbyva = TimeSpan.FromMilliseconds((ubehnutyCas.TotalMilliseconds - casovacVypnuti.Interval) * -1);
+                if (zbyva.Hours > 0)
+                    toolStripStatusLabelTimer.Text += string.Format("/-{0:00}:{1:00}:{2:00}", zbyva.TotalHours, zbyva.Minutes, zbyva.Seconds);
+                else
+                    toolStripStatusLabelTimer.Text += string.Format("/-{0:00}:{1:00}", zbyva.Minutes, zbyva.Seconds);
+
+            }
+
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -167,14 +239,14 @@ namespace NoLockScreenHelper2
             if (!orNot)
             {
                 stopky.Start();
-                casovatSopek.Interval = 1000;
-                casovatSopek.Start();
+                casovatStopek.Interval = 500;
+                casovatStopek.Start();
             }
             else
             {
                 stopky.Stop();
                 stopky.Reset();
-                casovatSopek.Stop();
+                casovatStopek.Stop();
                 toolStripStatusLabelTimer.Text = "";
             }
         }
@@ -187,7 +259,9 @@ namespace NoLockScreenHelper2
             this.InvokeIfRequired(c =>
             {
                 //Tools.Activate();
-                buttonStart.Enabled = false;
+                //if (!Config.Automat)
+                //    splitButtonStart.Enabled = false;
+                splitButtonStart.Enabled = Config.Automat;
                 buttonStop.Enabled = true;
                 menuItemStart.Enabled = false;
                 menuItemStop.Enabled = true;
@@ -216,7 +290,7 @@ namespace NoLockScreenHelper2
             this.InvokeIfRequired(c =>
             {
                 //Tools.Deactivate();
-                buttonStart.Enabled = true;
+                splitButtonStart.Enabled = true;
                 buttonStop.Enabled = false;
                 menuItemStart.Enabled = true;
                 menuItemStop.Enabled = false;
@@ -234,6 +308,7 @@ namespace NoLockScreenHelper2
                 BackColor = WinRed;
                 Config.Save();
                 startStopWatch(true);
+                casovacVypnuti.Stop();
                 //MainForm.NI.ShowBalloonTip(2000, "Stav", "Deaktivováno", System.Windows.Forms.ToolTipIcon.Info);
             });
         }
@@ -259,13 +334,14 @@ namespace NoLockScreenHelper2
 
         private void buttonAuto_Click(object sender, EventArgs e)
         {
-            buttonStart.Enabled = true;
+            //splitButtonStart.Enabled = true;
             menuItemStart.Enabled = true;
             buttonStop.Enabled = true;
             menuItemStop.Enabled = true;
             buttonAuto.Enabled = false;
             menuItemAuto.Enabled = false;
             Config.Automat = true;
+            casovacVypnuti.Enabled = false;
             automat.Start();
         }
 
@@ -275,6 +351,19 @@ namespace NoLockScreenHelper2
             Config.Save();
             if (Config.Automat)
                 automat.InitiateNetworkChanged();
+            _refreshStartButtonTimer();
+        }
+
+
+
+        private void splitButtonStart_Click(object sender, EventArgs e)
+        {
+            activate();
+            buttonAuto.Enabled = true;
+            menuItemAuto.Enabled = true;
+            Config.Automat = false;
+            automat.Stop();
+            Config.Activated = true;
         }
     }
 }

@@ -3,24 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.NetworkInformation;
+using System.Windows.Forms;
 
 namespace NoLockScreenHelper2
 {
     public class Automat
     {
         public static Network LastMatchedNetwork;
+        private Timer _timer = new Timer();
+
+        public Automat()
+        {
+            _timer.Interval = 60000;
+            _timer.Tick += (s, e) => { NetworkAddressChanged(null, null);  };
+        }
 
         public void Start()
         {
             NetworkChange.NetworkAvailabilityChanged += NetworkAvailabilityChanged;
             NetworkChange.NetworkAddressChanged += NetworkAddressChanged;
             NetworkAddressChanged(null, null);
+            _timer.Start();
+
         }
 
         public void Stop()
         {
             NetworkChange.NetworkAvailabilityChanged -= NetworkAvailabilityChanged;
             NetworkChange.NetworkAddressChanged -= NetworkAddressChanged;
+            _timer.Stop();
         }
 
         public void InitiateNetworkChanged()

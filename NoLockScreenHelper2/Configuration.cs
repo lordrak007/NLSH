@@ -20,6 +20,7 @@ namespace NoLockScreenHelper2
             EnableNotificationBubbles = true;
             HideToTrayIfMinimized = false;
             StartMinimalized = false;
+            
         }
         static readonly string ConfigurationsPath = "Settings.xml";
         [XmlAttribute]
@@ -51,7 +52,12 @@ namespace NoLockScreenHelper2
 
         public Networks Networks {get;set;}
 
+        public TimerTimeSpans TimeSpans { get; set; } = new TimerTimeSpans();
 
+        /// <summary>
+        /// What to do when start time ends
+        /// </summary>
+        public TimerEndsActivity TimerEndsActivity { get; set; } = TimerEndsActivity.Stop;
 
         // seznam GW a dle typu
 
@@ -63,7 +69,17 @@ namespace NoLockScreenHelper2
 
             try
             {
-                return LTools.XmlUtility.DeserializeFromFile<Configuration>(soubor);
+                var cfg = LTools.XmlUtility.DeserializeFromFile<Configuration>(soubor);
+                if (cfg.TimeSpans.Count == 0)
+                {
+                    cfg.TimeSpans.Add(new TimerTimeSpan(5));
+                    cfg.TimeSpans.Add(new TimerTimeSpan(10));
+                    cfg.TimeSpans.Add(new TimerTimeSpan(15));
+                    cfg.TimeSpans.Add(new TimerTimeSpan(30));
+                    cfg.TimeSpans.Add(new TimerTimeSpan(60));
+                    cfg.TimeSpans.Add(new TimerTimeSpan(180));
+                }
+                return cfg;
             }
             catch (Exception ex)
             {
@@ -185,6 +201,12 @@ namespace NoLockScreenHelper2
         NetworkName = 4,
         All = Gateway | IPAddress| NetworkName
     }
+
+    public enum TimerEndsActivity
+    {
+        Stop = 0,
+        Auto = 1
+    }
     //[Serializable]
     //[Flags]
     //public enum Using
@@ -193,4 +215,37 @@ namespace NoLockScreenHelper2
     //    Gateway = 2,
     //    All = IPAddress | Gateway
     //}
+    [Serializable]
+    public class TimerTimeSpan
+    {
+        public TimerTimeSpan()
+        { }
+        public TimerTimeSpan(TimeSpan timeSpan)
+        {
+            TimeSpan = timeSpan;
+        }
+
+        public TimerTimeSpan(int minutes)
+        {
+            TimeSpan = new TimeSpan(0, minutes, 0);
+        }
+        [XmlIgnore]
+        public TimeSpan TimeSpan { get; set; }
+
+        [XmlAttribute("TimeSpan")]
+        public string TimeSpanForXml
+        {
+            get { return TimeSpan.ToString(); }
+            set
+            {
+                TimeSpan = string.IsNullOrEmpty(value) ? new TimeSpan() : TimeSpan.Parse(value);
+            }
+        }
+    }
+
+    [Serializable]
+    public class TimerTimeSpans : List<TimerTimeSpan>
+    {
+
+    }
 }

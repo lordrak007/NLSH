@@ -12,9 +12,12 @@ namespace NoLockScreenHelper2
 {
     public partial class SettingsForm : Form
     {
+        Configuration _config;
         public SettingsForm()
         {
             InitializeComponent();
+
+            _config = MainForm.Config;
 
             // detekce přenosné verze
             if (Configuration.IsPortable)
@@ -34,7 +37,17 @@ namespace NoLockScreenHelper2
             this.checkBoxHideIfMinimalized.CheckedChanged += new System.EventHandler(this.checkBoxHideIfMinimalized_CheckedChanged);
             this.checkBoxActivateOnStartup.CheckedChanged += new System.EventHandler(this.checkBoxActivateOnStartup_CheckedChanged);
 
+            if (MainForm.Config.TimerEndsActivity == TimerEndsActivity.Auto)
+                radioButtonTimerEndsAuto.Checked = true;
+            else
+                radioButtonTimerEndsStop.Checked = true;
+
             initOLV();
+
+            radioButtonTimerEndsAuto.CheckedChanged += (s, e) => { MainForm.Config.TimerEndsActivity = TimerEndsActivity.Auto; MainForm.Config.Save(); };
+            radioButtonTimerEndsStop.CheckedChanged += (s, e) => { MainForm.Config.TimerEndsActivity = TimerEndsActivity.Stop; MainForm.Config.Save(); };
+
+            
         }
 
         private void checkBoxActivateOnStartup_CheckedChanged(object sender, EventArgs e)
@@ -120,6 +133,43 @@ namespace NoLockScreenHelper2
             objectListView1.UseTranslucentHotItem = true;
             objectListView1.UseTranslucentSelection = true;
             objectListView1.RebuildColumns();
+
+
+
+            dataListView1.ShowGroups = false;
+            dataListView1.AutoGenerateColumns = false;
+            dataListView1.UseHotItem = false;
+            dataListView1.UseTranslucentHotItem = false;
+            dataListView1.UseTranslucentSelection = false;
+
+            dataListView1.DataSource = MainForm.Config.TimeSpans;
+            ContextMenuStrip cms = new ContextMenuStrip();
+            cms.Items.Add("Přidat").Click += (s, e) => {
+                TimeSpanPicker tpp = new TimeSpanPicker();
+                if (tpp.ShowDialog(this) == DialogResult.OK)
+                {
+                    MainForm.Config.TimeSpans.Add(new TimerTimeSpan(tpp.Timespan));
+                    dataListView1.BuildList();
+                }
+            };
+            cms.Items.Add("Odebrat").Click += (s, e) => {
+
+                MainForm.Config.TimeSpans.Remove((TimerTimeSpan)dataListView1.MouseMoveHitTest.Item.RowObject);
+                dataListView1.BuildList();
+            };
+            cms.Items.Add("Upravit").Click += (s, e) => {
+                int index = dataListView1.MouseMoveHitTest.RowIndex;
+                var tss = _config.TimeSpans[index].TimeSpan;
+                TimeSpanPicker tpp = new TimeSpanPicker(tss);
+                if (tpp.ShowDialog(this) == DialogResult.OK)
+                {
+                    _config.TimeSpans[index].TimeSpan = tpp.Timespan;
+                    dataListView1.BuildList();
+                }
+            };
+            dataListView1.ContextMenuStrip = cms;
+
+
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)

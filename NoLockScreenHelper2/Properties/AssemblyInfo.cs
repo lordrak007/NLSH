@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("No Lock Screen Helper 2")]
 [assembly: AssemblyDescription("Aplikace slouží k zablokování uspávání obrazovky a tak i k naplánování uzamčení počítače.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Marek Anýž")]
+[assembly: AssemblyCompany("WSW")]
 [assembly: AssemblyProduct("NoLockScreenHelper2")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.2.0")]
-[assembly: AssemblyFileVersion("2.0.2.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]

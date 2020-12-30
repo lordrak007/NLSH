@@ -29,26 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonAuto = new System.Windows.Forms.Button();
             this.pictureBoxSettings = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitButtonStart = new NoLockScreenHelper2.SplitButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Location = new System.Drawing.Point(12, 12);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonStart.TabIndex = 2;
-            this.buttonStart.Text = "START";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // buttonStop
             // 
@@ -103,10 +93,21 @@
             // 
             this.toolStripStatusLabelTimer.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabelTimer.Name = "toolStripStatusLabelTimer";
-            this.toolStripStatusLabelTimer.Size = new System.Drawing.Size(208, 17);
+            this.toolStripStatusLabelTimer.Size = new System.Drawing.Size(239, 17);
             this.toolStripStatusLabelTimer.Spring = true;
             this.toolStripStatusLabelTimer.Text = "Doba aktivace";
             this.toolStripStatusLabelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // splitButtonStart
+            // 
+            this.splitButtonStart.Location = new System.Drawing.Point(12, 12);
+            this.splitButtonStart.Name = "splitButtonStart";
+            this.splitButtonStart.Size = new System.Drawing.Size(75, 23);
+            this.splitButtonStart.TabIndex = 7;
+            this.splitButtonStart.Text = "START";
+            this.splitButtonStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.splitButtonStart.UseVisualStyleBackColor = true;
+            this.splitButtonStart.Click += new System.EventHandler(this.splitButtonStart_Click);
             // 
             // MainForm
             // 
@@ -114,11 +115,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(293, 65);
+            this.Controls.Add(this.splitButtonStart);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBoxSettings);
             this.Controls.Add(this.buttonAuto);
             this.Controls.Add(this.buttonStop);
-            this.Controls.Add(this.buttonStart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(309, 104);
             this.MinimumSize = new System.Drawing.Size(309, 104);
@@ -132,14 +133,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonAuto;
         private System.Windows.Forms.PictureBox pictureBoxSettings;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTimer;
+        private SplitButton splitButtonStart;
     }
 }
 
