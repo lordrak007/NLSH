@@ -16,9 +16,8 @@ namespace NoLockScreenHelper2
         public SettingsForm()
         {
             InitializeComponent();
-            Language.ChangeLanguage(MainForm.Config.Language);
-
             _config = MainForm.Config;
+            UpdateUI();
 
             checkBoxEnableNotificationBubbles.Checked = MainForm.Config.EnableNotificationBubbles;
             checkBoxActivateOnStartup.Checked = MainForm.Config.ActivateOnStartup;
@@ -47,11 +46,12 @@ namespace NoLockScreenHelper2
 
             comboBoxLanguage.Items.Clear();
             comboBoxLanguage.Items.Add(new BrightIdeasSoftware.ComboBoxItem("--", "Auto"));
+            comboBoxLanguage.SelectedIndex = 0;
             foreach (var c in Language.GetAvailableLanguages())
             {
                 BrightIdeasSoftware.ComboBoxItem item = new BrightIdeasSoftware.ComboBoxItem(c.Value, c.Key);
                 comboBoxLanguage.Items.Add(item);
-                if (c.Value.TwoLetterISOLanguageName == MainForm.Config.Language.ToString())
+                if (c.Value.TwoLetterISOLanguageName == MainForm.Config.Language)
                     comboBoxLanguage.SelectedItem = item;
             }
 
