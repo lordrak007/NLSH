@@ -146,6 +146,9 @@ namespace NoLockScreenHelper2
             }
         }
 
+        [XmlAttribute]
+        public string Language { get; set; } = string.Empty;
+
     }
     [Serializable]
     public class Networks : List<Network>

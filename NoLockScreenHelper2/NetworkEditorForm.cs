@@ -20,6 +20,7 @@ namespace NoLockScreenHelper2
         public NetworkEditorForm(Mode mod)
         {
             InitializeComponent();
+            UpdateUI();
 
             if (mod == Mode.New)
             {
@@ -47,6 +48,19 @@ namespace NoLockScreenHelper2
                 comboBoxChooseNet.Visible = false;
                 labelChooseNetLabel.Visible = false;
             }
+        }
+
+        internal void UpdateUI()
+        {
+            Text = Resources.Lng.NetEditFrmFormName;
+            labelChooseNetLabel.Text = Resources.Lng.NetEditFrmLabelChooseNet;
+            comboBoxChooseNet.Text = Resources.Lng.NetEditFrmComboBoxChooseNet;
+            buttonOk.Text = Resources.Lng.NetEditFrmButtonOk;
+            buttonCancel.Text = Resources.Lng.NetEditFrmButtonCancel;
+            labelName.Text = Resources.Lng.NetEditFrmLabelName;
+            labelNetworkName.Text = Resources.Lng.NetEditFrmLabelNetworkName;
+            labelGateway.Text = Resources.Lng.NetEditFrmLabelGateway;
+            labelIPAddress.Text = Resources.Lng.NetEditFrmLabelIPAddress;
         }
 
         private void ComboBoxChooseNet_SelectedIndexChanged(object sender, EventArgs e)

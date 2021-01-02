@@ -42,6 +42,7 @@
             // 
             // buttonStop
             // 
+            this.buttonStop.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.buttonStop.Location = new System.Drawing.Point(93, 12);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(75, 23);
@@ -52,6 +53,7 @@
             // 
             // buttonAuto
             // 
+            this.buttonAuto.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.buttonAuto.Location = new System.Drawing.Point(174, 12);
             this.buttonAuto.Name = "buttonAuto";
             this.buttonAuto.Size = new System.Drawing.Size(75, 23);
@@ -63,6 +65,7 @@
             // pictureBoxSettings
             // 
             this.pictureBoxSettings.Image = global::NoLockScreenHelper2.Properties.Resources.gear_640;
+            this.pictureBoxSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBoxSettings.Location = new System.Drawing.Point(255, 12);
             this.pictureBoxSettings.Name = "pictureBoxSettings";
             this.pictureBoxSettings.Size = new System.Drawing.Size(28, 23);
@@ -100,6 +103,7 @@
             // 
             // splitButtonStart
             // 
+            this.splitButtonStart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.splitButtonStart.Location = new System.Drawing.Point(12, 12);
             this.splitButtonStart.Name = "splitButtonStart";
             this.splitButtonStart.Size = new System.Drawing.Size(75, 23);
@@ -121,6 +125,7 @@
             this.Controls.Add(this.buttonAuto);
             this.Controls.Add(this.buttonStop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.MaximumSize = new System.Drawing.Size(309, 104);
             this.MinimumSize = new System.Drawing.Size(309, 104);
             this.Name = "MainForm";

@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,14 +26,19 @@ namespace NoLockScreenHelper2
         Timer casovacVypnuti = new Timer();
         DateTime _casovacVypnutiStart = new DateTime();
         Task kontrolor;
-        MenuItem menuItemShow = new MenuItem("Zobrazit");
-        MenuItem menuItemStop = new MenuItem("Stop");
-        MenuItem menuItemStart = new MenuItem("Start");
-        MenuItem menuItemAuto = new MenuItem("Auto");
+        MenuItem menuItemShow = new MenuItem(NoLockScreenHelper2.Resources.Lng.Show);
+        MenuItem menuItemStop = new MenuItem(NoLockScreenHelper2.Resources.Lng.Stop);
+        MenuItem menuItemStart = new MenuItem(NoLockScreenHelper2.Resources.Lng.Start);
+        MenuItem menuItemAuto = new MenuItem(NoLockScreenHelper2.Resources.Lng.Auto);
 
         public MainForm()
         {
             InitializeComponent();
+            Config = Configuration.Load();
+            Config.ActivationChanged += Config_ActivationChanged;
+            Language.ChangeLanguage(Config.Language);
+            UpdateUI();
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.FormClosing += MainForm_FormClosing;
             this.Resize += MainForm_Resize;
@@ -41,10 +47,6 @@ namespace NoLockScreenHelper2
             // vymazani casovace na formulari
             toolStripStatusLabelTimer.Text = "";
             casovatStopek.Tick += CasovatStopek_Tick;
-
-            Config = Configuration.Load();
-
-            Config.ActivationChanged += Config_ActivationChanged;
 
             NI.Visible = true;
             NI.Icon = Properties.Resources.zamceno;
@@ -87,7 +89,7 @@ namespace NoLockScreenHelper2
                         this.InvokeIfRequired(c =>
                         {
                             if (MainForm.Config.EnableNotificationBubbles)
-                                MainForm.NI.ShowBalloonTip(2000, "Stav", "Aktivováno", System.Windows.Forms.ToolTipIcon.Info);
+                                MainForm.NI.ShowBalloonTip(2000, NoLockScreenHelper2.Resources.Lng.State, NoLockScreenHelper2.Resources.Lng.Activated, System.Windows.Forms.ToolTipIcon.Info);
                         });
                     }
                     else if (!Config.Activated && prevState != Config.Activated)
@@ -96,7 +98,7 @@ namespace NoLockScreenHelper2
                         this.InvokeIfRequired(c =>
                         {
                             if (MainForm.Config.EnableNotificationBubbles)
-                                MainForm.NI.ShowBalloonTip(2000, "Stav", "Deaktivováno", System.Windows.Forms.ToolTipIcon.Info);
+                                MainForm.NI.ShowBalloonTip(2000, NoLockScreenHelper2.Resources.Lng.State, NoLockScreenHelper2.Properties.Resources.Deactivated, System.Windows.Forms.ToolTipIcon.Info);
                         });
                     }
 
@@ -145,6 +147,14 @@ namespace NoLockScreenHelper2
                 splitButtonStart.Menu.Items.Add(new ToolStripMenuItem(span.TimeSpan.ToString(), null, splitButtonStartMenuItemClik_Click));
             }
 
+        }
+
+        internal void UpdateUI()
+        {
+            buttonAuto.Text = Resources.Lng.Auto;
+            splitButtonStart.Text = Resources.Lng.Start;
+            buttonStop.Text = Resources.Lng.Stop;
+            toolStripStatusLabelStatus.Text = string.Empty;
         }
 
         private void splitButtonStartMenuItemClik_Click(object sender, EventArgs e)
@@ -217,8 +227,9 @@ namespace NoLockScreenHelper2
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show($"Při běhu programu nastala chyba:\n{((Exception)e.ExceptionObject).Message}\n\n{e.ExceptionObject}", "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(Resources.Lng.ExceptionDuringRunningProgram + $":\n{((Exception)e.ExceptionObject).Message}\n\n{e.ExceptionObject}", "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+        
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -251,9 +262,6 @@ namespace NoLockScreenHelper2
             }
         }
 
-        
-
-
         void activate()
         {
             this.InvokeIfRequired(c =>
@@ -268,12 +276,12 @@ namespace NoLockScreenHelper2
                 Icon = NI.Icon = Properties.Resources.odemceno;
                 if (Config.Automat)
                 {
-                        toolStripStatusLabelStatus.Text = "Auto: Aktivováno";
+                        toolStripStatusLabelStatus.Text = NoLockScreenHelper2.Resources.Lng.StatusActivatedAuto;
                         statusStrip1.BackColor = Color.Orange;
                 }
                 else
                 {
-                        toolStripStatusLabelStatus.Text = "Ručně: Aktivováno";
+                        toolStripStatusLabelStatus.Text = NoLockScreenHelper2.Resources.Lng.StatusActivatedManual;
                         statusStrip1.BackColor = WinGreen;
                 }
                 BackColor = WinGreen;
@@ -297,12 +305,12 @@ namespace NoLockScreenHelper2
                 Icon = NI.Icon = Properties.Resources.zamceno;
                 if (Config.Automat)
                 {
-                    toolStripStatusLabelStatus.Text = "Auto: Deaktivováno";
+                    toolStripStatusLabelStatus.Text = NoLockScreenHelper2.Resources.Lng.StatusDeactivatedAuto;
                     statusStrip1.BackColor = Color.Orange;
                 }
                 else
                 {
-                    toolStripStatusLabelStatus.Text = "Ručně: Deaktivováno";
+                    toolStripStatusLabelStatus.Text = NoLockScreenHelper2.Resources.Lng.StatusDeactivatedManual;
                     statusStrip1.BackColor = WinRed;
                 }
                 BackColor = WinRed;
@@ -352,10 +360,9 @@ namespace NoLockScreenHelper2
             if (Config.Automat)
                 automat.InitiateNetworkChanged();
             _refreshStartButtonTimer();
+            UpdateUI();
         }
-
-
-
+        
         private void splitButtonStart_Click(object sender, EventArgs e)
         {
             activate();

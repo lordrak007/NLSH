@@ -66,6 +66,7 @@
     <Compile Include="Automat.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="LanguageHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +81,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Lng.Designer.cs">
+      <DependentUpon>Lng.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Lng.cs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lng.cs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Lng.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lng.en.resx</DependentUpon>
+    </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +135,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Resources\Lng.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lng.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Lng.cs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lng.cs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Lng.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lng.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>

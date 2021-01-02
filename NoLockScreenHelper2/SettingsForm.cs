@@ -16,14 +16,9 @@ namespace NoLockScreenHelper2
         public SettingsForm()
         {
             InitializeComponent();
+            Language.ChangeLanguage(MainForm.Config.Language);
 
             _config = MainForm.Config;
-
-            // detekce přenosné verze
-            if (Configuration.IsPortable)
-                buttonPortableMaker.Text = "Zrušit přenositelnost";
-            else
-                buttonPortableMaker.Text = "Udělat přenositelné";
 
             checkBoxEnableNotificationBubbles.Checked = MainForm.Config.EnableNotificationBubbles;
             checkBoxActivateOnStartup.Checked = MainForm.Config.ActivateOnStartup;
@@ -47,8 +42,33 @@ namespace NoLockScreenHelper2
             radioButtonTimerEndsAuto.CheckedChanged += (s, e) => { MainForm.Config.TimerEndsActivity = TimerEndsActivity.Auto; MainForm.Config.Save(); };
             radioButtonTimerEndsStop.CheckedChanged += (s, e) => { MainForm.Config.TimerEndsActivity = TimerEndsActivity.Stop; MainForm.Config.Save(); };
 
-            
+
+            #region Languages
+
+            comboBoxLanguage.Items.Clear();
+            comboBoxLanguage.Items.Add(new BrightIdeasSoftware.ComboBoxItem("--", "Auto"));
+            foreach (var c in Language.GetAvailableLanguages())
+            {
+                BrightIdeasSoftware.ComboBoxItem item = new BrightIdeasSoftware.ComboBoxItem(c.Value, c.Key);
+                comboBoxLanguage.Items.Add(item);
+                if (c.Value.TwoLetterISOLanguageName == MainForm.Config.Language.ToString())
+                    comboBoxLanguage.SelectedItem = item;
+            }
+
+            comboBoxLanguage.SelectedIndexChanged += (s, e) => {
+                BrightIdeasSoftware.ComboBoxItem lngItem = comboBoxLanguage.SelectedItem as BrightIdeasSoftware.ComboBoxItem;
+                System.Globalization.CultureInfo ci = lngItem.Key as System.Globalization.CultureInfo;
+                Language.ChangeLanguage(ci);
+                UpdateUI();
+                MainForm.Config.Language = lngItem.Key.ToString();
+                MainForm.Config.Save();
+            };
+            comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            #endregion Languages
+
+
         }
+
 
         private void checkBoxActivateOnStartup_CheckedChanged(object sender, EventArgs e)
         {
@@ -86,9 +106,9 @@ namespace NoLockScreenHelper2
         {
             Configuration.SwitchPortability();
             if (Configuration.IsPortable)
-                buttonPortableMaker.Text = "Zrušit přenositelnost";
+                buttonPortableMaker.Text = Resources.Lng.SettingsButtonPortableMakerDisable;
             else
-                buttonPortableMaker.Text = "Udělat přenositelné";
+                buttonPortableMaker.Text = Resources.Lng.SettingsButtonPortableMakerEnable;
         }
 
 
@@ -194,6 +214,39 @@ namespace NoLockScreenHelper2
             }
         }
 
+        internal void UpdateUI()
+        {
+            checkBoxActivateOnStartup.Text = Resources.Lng.SettingsActivateOnStartup;
+            checkBoxEnableNotificationBubbles.Text = Resources.Lng.SettingsEnableNotificationBubbles;
+            checkBoxHideIfMinimalized.Text = Resources.Lng.SettingsHideIfMinimized;
+            checkBoxRunOnLogOn.Text = Resources.Lng.SettingsRunOnLogOn;
+            checkBoxStartMinimized.Text = Resources.Lng.SettingsStartMinimized;
+            buttonAdd.Text = Resources.Lng.SettingsAdd;
+            buttonRemove.Text = Resources.Lng.SettingsRemove;
+            olvColumnGateway.Text = Resources.Lng.SettingsOLVColGateway;
+            olvColumnIPAddress.Text = Resources.Lng.SettingsOLVColIPAddress;
+            olvColumnName.Text = Resources.Lng.SettingsOLVColName;
+            olvColumnNetworkName.Text = Resources.Lng.SettingsOLVColNetworkName;
+            olvColumnTimerTimeSpan.Text = Resources.Lng.SettingsOLVColTimerTimeSpan;
+            groupBoxPortability.Text = Resources.Lng.SettingsGroupBoxPortability;
+            groupBoxLanguage.Text = Resources.Lng.SettingsGroupBoxLanguage;
+            groupBoxTimer.Text = Resources.Lng.SettingsGroupBoxTimer;
+            groupBoxTimerEnds.Text = Resources.Lng.SettingsGroupBoxTimerEnds;
+            radioButtonTimerEndsAuto.Text = Resources.Lng.SettingsRadioButtonTimerEndsAuto;
+            radioButtonTimerEndsStop.Text = Resources.Lng.SettingsRadioButtonTimerEndsStop;
+
+            tabPageBehavior.Text = Resources.Lng.SettingsTabPageBehavior;
+            tabPageNetworks.Text = Resources.Lng.SettingsTabPageNetworks;
+            tabPageOther.Text = Resources.Lng.SettingsTabPageOther;
+            tabPageTimer.Text = Resources.Lng.SettingsTabPageTimer;
+
+            if (Configuration.IsPortable)
+                buttonPortableMaker.Text = Resources.Lng.SettingsButtonPortableMakerDisable;
+            else
+                buttonPortableMaker.Text = Resources.Lng.SettingsButtonPortableMakerEnable;
+
+
+        }
 
     }
 }

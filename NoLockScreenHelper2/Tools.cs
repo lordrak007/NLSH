@@ -187,11 +187,11 @@ namespace NoLockScreenHelper2
         {
             List<string> str = new List<string>();
             if (!string.IsNullOrEmpty(NetworkName))
-                str.Add($"Název: {NetworkName}");
+                str.Add($"{Resources.Lng.NetEditFrmLabelName}: {NetworkName}");
             if (IPAddress != null)
-                str.Add($"IP Adresa: {IPAddress}");
+                str.Add($"{Resources.Lng.NetEditFrmLabelIPAddress}: {IPAddress}");
             if (Gateway != null)
-                str.Add($"IP Brány: {Gateway}");
+                str.Add($"{Resources.Lng.NetEditFrmLabelGateway}: {Gateway}");
             return string.Join(", ", str);
         }
     }

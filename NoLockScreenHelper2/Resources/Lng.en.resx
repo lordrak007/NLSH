@@ -117,26 +117,160 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="desktop_default_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\desktop-default_128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ExceptionDuringRunningProgram" xml:space="preserve">
+    <value>Unexpected exception</value>
   </data>
-  <data name="desktop_green_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\desktop-green_128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StatusActivatedManual" xml:space="preserve">
+    <value>Manual: Activated</value>
   </data>
-  <data name="desktop_red_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\desktop-red_128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StatusActivatedAuto" xml:space="preserve">
+    <value>Auto: Activated</value>
   </data>
-  <data name="gear_640" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gear_640.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StatusDeactivatedAuto" xml:space="preserve">
+    <value>Auto: Deactivated</value>
   </data>
-  <data name="odemceno" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\odemceno.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StatusDeactivatedManual" xml:space="preserve">
+    <value>Manual: Deactivated</value>
   </data>
-  <data name="zamceno" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zamceno.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
   </data>
-  <data name="Deactivated" xml:space="preserve">
-    <value>Deaktivováno</value>
+  <data name="Activated" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>STOP</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="Auto" xml:space="preserve">
+    <value>AUTO</value>
+  </data>
+  <data name="LangCzech" xml:space="preserve">
+    <value>Česky</value>
+  </data>
+  <data name="LangEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsStartMinimized" xml:space="preserve">
+    <value>Run minimalized</value>
+  </data>
+  <data name="SettingsActivateOnStartup" xml:space="preserve">
+    <value>Activate on startup</value>
+  </data>
+  <data name="SettingsEnableNotificationBubbles" xml:space="preserve">
+    <value>Enable notification bubbles</value>
+  </data>
+  <data name="SettingsRunOnLogOn" xml:space="preserve">
+    <value>Run on logon</value>
+  </data>
+  <data name="SettingsHideIfMinimized" xml:space="preserve">
+    <value>Hide when minimalized</value>
+  </data>
+  <data name="SettingsAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SettingsRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SettingsOLVColGateway" xml:space="preserve">
+    <value>Gateway IP</value>
+  </data>
+  <data name="SettingsOLVColIPAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="SettingsOLVColName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SettingsOLVColNetworkName" xml:space="preserve">
+    <value>Network name</value>
+  </data>
+  <data name="SettingsOLVColTimerTimeSpan" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="SettingsGroupBoxPortability" xml:space="preserve">
+    <value>Portability</value>
+  </data>
+  <data name="SettingsGroupBoxLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsGroupBoxTimer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="SettingsGroupBoxTimerEnds" xml:space="preserve">
+    <value>When timer ends</value>
+  </data>
+  <data name="SettingsButtonPortableMakerEnable" xml:space="preserve">
+    <value>Make portable</value>
+  </data>
+  <data name="SettingsRadioButtonTimerEndsAuto" xml:space="preserve">
+    <value>switch to Auto</value>
+  </data>
+  <data name="SettingsRadioButtonTimerEndsStop" xml:space="preserve">
+    <value>switch to stop</value>
+  </data>
+  <data name="SettingsTabPageBehavior" xml:space="preserve">
+    <value>Behavior</value>
+  </data>
+  <data name="SettingsTabPageNetworks" xml:space="preserve">
+    <value>Networks</value>
+  </data>
+  <data name="SettingsTabPageOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="SettingsTabPageTimer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="SettingsButtonPortableMakerDisable" xml:space="preserve">
+    <value>Disable portability</value>
+  </data>
+  <data name="NetEditFrmFormName" xml:space="preserve">
+    <value>Network editor</value>
+  </data>
+  <data name="NetEditFrmLabelChooseNet" xml:space="preserve">
+    <value>Select one of the found networks</value>
+  </data>
+  <data name="NetEditFrmComboBoxChooseNet" xml:space="preserve">
+    <value>Choose item</value>
+  </data>
+  <data name="NetEditFrmButtonOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="NetEditFrmButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NetEditFrmLabelName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NetEditFrmLabelNetworkName" xml:space="preserve">
+    <value>Network name</value>
+  </data>
+  <data name="NetEditFrmLabelGateway" xml:space="preserve">
+    <value>Gateway IP</value>
+  </data>
+  <data name="NetEditFrmLabelIPAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="TimeSpanPickerFrmFormName" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="TimeSpanPickerFrmButtonOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="TimeSpanPickerFrmBuutonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TimeSpanPickerFrmLabelHours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="TimeSpanPickerFrmLabelMinutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="TimeSpanPickerFrmLabelSeconds" xml:space="preserve">
+    <value>Seconds</value>
   </data>
 </root>

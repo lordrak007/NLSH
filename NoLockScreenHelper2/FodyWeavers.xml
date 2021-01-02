@@ -1,16 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
   <Costura IncludeDebugSymbls="false">
-    <!-- <IncludeAssemblies>
-    Interop.NETWORKLIST
-		</IncludeAssemblies> 
-		error CS1752: Interop type 'NetworkListManagerClass' cannot be embedded. Use the applicable interface instead.
-		-->
     <Unmanaged32Assemblies>
       Interop.NETWORKLIST
+      NLSH.resources
     </Unmanaged32Assemblies>
     <Unmanaged64Assemblies>
       Interop.NETWORKLIST
+      NLSH.resources
     </Unmanaged64Assemblies>
   </Costura>
 </Weavers>

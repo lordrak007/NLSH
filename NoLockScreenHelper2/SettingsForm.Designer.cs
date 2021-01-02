@@ -47,6 +47,7 @@
             this.tabPageNetworks = new System.Windows.Forms.TabPage();
             this.splitContainerNetworks = new System.Windows.Forms.SplitContainer();
             this.tabPageOther = new System.Windows.Forms.TabPage();
+            this.groupBoxLanguage = new System.Windows.Forms.GroupBox();
             this.groupBoxPortability = new System.Windows.Forms.GroupBox();
             this.tabPageTimer = new System.Windows.Forms.TabPage();
             this.groupBoxTimerEnds = new System.Windows.Forms.GroupBox();
@@ -55,6 +56,7 @@
             this.groupBoxTimer = new System.Windows.Forms.GroupBox();
             this.dataListView1 = new BrightIdeasSoftware.DataListView();
             this.olvColumnTimerTimeSpan = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageBehavior.SuspendLayout();
@@ -64,6 +66,7 @@
             this.splitContainerNetworks.Panel2.SuspendLayout();
             this.splitContainerNetworks.SuspendLayout();
             this.tabPageOther.SuspendLayout();
+            this.groupBoxLanguage.SuspendLayout();
             this.groupBoxPortability.SuspendLayout();
             this.tabPageTimer.SuspendLayout();
             this.groupBoxTimerEnds.SuspendLayout();
@@ -171,7 +174,7 @@
             this.objectListView1.HideSelection = false;
             this.objectListView1.Location = new System.Drawing.Point(0, 0);
             this.objectListView1.Name = "objectListView1";
-            this.objectListView1.Size = new System.Drawing.Size(396, 239);
+            this.objectListView1.Size = new System.Drawing.Size(396, 242);
             this.objectListView1.TabIndex = 8;
             this.objectListView1.UseCompatibleStateImageBehavior = false;
             this.objectListView1.View = System.Windows.Forms.View.Details;
@@ -257,13 +260,14 @@
             this.splitContainerNetworks.Panel2.Controls.Add(this.buttonRemove);
             this.splitContainerNetworks.Panel2.Controls.Add(this.buttonAdd);
             this.splitContainerNetworks.Size = new System.Drawing.Size(396, 282);
-            this.splitContainerNetworks.SplitterDistance = 239;
+            this.splitContainerNetworks.SplitterDistance = 242;
             this.splitContainerNetworks.SplitterWidth = 1;
             this.splitContainerNetworks.TabIndex = 10;
             this.splitContainerNetworks.TabStop = false;
             // 
             // tabPageOther
             // 
+            this.tabPageOther.Controls.Add(this.groupBoxLanguage);
             this.tabPageOther.Controls.Add(this.groupBoxPortability);
             this.tabPageOther.Location = new System.Drawing.Point(4, 22);
             this.tabPageOther.Name = "tabPageOther";
@@ -272,6 +276,16 @@
             this.tabPageOther.TabIndex = 2;
             this.tabPageOther.Text = "Ostatní";
             this.tabPageOther.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxLanguage
+            // 
+            this.groupBoxLanguage.Controls.Add(this.comboBoxLanguage);
+            this.groupBoxLanguage.Location = new System.Drawing.Point(163, 6);
+            this.groupBoxLanguage.Name = "groupBoxLanguage";
+            this.groupBoxLanguage.Size = new System.Drawing.Size(153, 70);
+            this.groupBoxLanguage.TabIndex = 2;
+            this.groupBoxLanguage.TabStop = false;
+            this.groupBoxLanguage.Text = "Jazyk";
             // 
             // groupBoxPortability
             // 
@@ -362,6 +376,14 @@
             this.olvColumnTimerTimeSpan.Text = "Čas";
             this.olvColumnTimerTimeSpan.Width = 344;
             // 
+            // comboBoxLanguage
+            // 
+            this.comboBoxLanguage.FormattingEnabled = true;
+            this.comboBoxLanguage.Location = new System.Drawing.Point(6, 25);
+            this.comboBoxLanguage.Name = "comboBoxLanguage";
+            this.comboBoxLanguage.Size = new System.Drawing.Size(141, 21);
+            this.comboBoxLanguage.TabIndex = 0;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -383,6 +405,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerNetworks)).EndInit();
             this.splitContainerNetworks.ResumeLayout(false);
             this.tabPageOther.ResumeLayout(false);
+            this.groupBoxLanguage.ResumeLayout(false);
             this.groupBoxPortability.ResumeLayout(false);
             this.tabPageTimer.ResumeLayout(false);
             this.groupBoxTimerEnds.ResumeLayout(false);
@@ -421,5 +444,7 @@
         private System.Windows.Forms.GroupBox groupBoxTimer;
         private BrightIdeasSoftware.DataListView dataListView1;
         private BrightIdeasSoftware.OLVColumn olvColumnTimerTimeSpan;
+        private System.Windows.Forms.GroupBox groupBoxLanguage;
+        private System.Windows.Forms.ComboBox comboBoxLanguage;
     }
 }
